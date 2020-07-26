@@ -10,18 +10,26 @@ def clear():
     else:
         _ = system('clear')
 
-def main():
+def arguments() -> list:
+    try:
+        return argv[1::]
+    except:
+        return []
+
+def start():    
+    clear()
+    print('herbert-text-bot:\n')
+    
     try:
         arg = argv
-        clear()
 
         if str(arg[1]).strip() != '':
             for c in range(5, 0, -1):
-                print('herbert-text-bot:\n\nStarting... {} (Press \'ctrl + c\' to cancel the operation)'.format(c))
+                print('\r' + 'Starting... {} (Press \'ctrl + c\' to cancel the operation) '.format(c), end=(''))
                 sleep(1)
-                clear()
+            print('\r' + (60 * ' '), end='\r')
 
-            print('herbert-text-bot:\n\nStarted...')
+            print('Started...')
 
             s = None
             try:
@@ -36,6 +44,18 @@ def main():
         pass
     clear()
     print('herbert-text-bot:\n\nFailed!')
+
+def menu():
+    pass
+
+def main():
+    arg = arguments()
+
+    try:
+        if arg[0]:
+            start()
+    except:
+        menu()
 
 if __name__ == "__main__":
     main()
