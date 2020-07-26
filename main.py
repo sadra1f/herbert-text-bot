@@ -2,23 +2,13 @@ from sys import argv
 from os import system, name
 from time import sleep
 
-import keyboard
+from modules.spammer import spam
 
 def clear():
     if name == 'nt':
         _ = system('cls')
     else:
         _ = system('clear')
-
-def spam(text: str, num: int = 1, time: int = 1) -> bool:
-    try:
-        for _ in range(num):
-            sleep(time)
-            keyboard.write(text)
-            keyboard.press_and_release('enter')
-        return True
-    except:
-        return False
 
 def main():
     try:
