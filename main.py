@@ -34,12 +34,13 @@ def operation(name: str, arg: list) -> bool:
 
 def start(arg: list):
     clear()
-    print('herbert-text-bot:\n')
+    print('herbert-text-bot:')
+    print('(Press \'ctrl + c\' to cancel the operation)\n')
     
     try:
         if str(arg[1]).strip() != '':
             for c in range(5, 0, -1):
-                print('\r' + 'Starting... {} (Press \'ctrl + c\' to cancel the operation) '.format(c), end=(''))
+                print('\r' + 'Starting... {} '.format(c), end=(''))
                 sleep(1)
             print('\r' + (60 * ' '), end='\r')
 
@@ -55,7 +56,8 @@ def start(arg: list):
 
 def menu(option) -> bool:
     clear()
-    print('herbert-text-bot:\n')
+    print('herbert-text-bot:')
+    print('(Press \'ctrl + c\' to cancel the operation)\n')
     arg = [option]
     try:
         if option == 'about':
@@ -64,12 +66,12 @@ def menu(option) -> bool:
             print('This program is under MIT Licence\n')
         elif option == 'spammer':
             arg.append(input('Text: '))
-            arg.append(input('Count: '))
-            arg.append(input('Wait time (sec): '))
+            arg.append(input('Count (default: 1): '))
+            arg.append(input('Wait time (sec - default: 1): '))
             start(arg)
     except:
         clear()
-        print('herbert-text-bot\n') 
+        print('herbert-text-bot:') 
 
 def mainMenu(stdscr) -> str:
 
@@ -122,10 +124,17 @@ def main():
         else:
             start(arg)
     except:
-        clear()
-        option = curses.wrapper(mainMenu)
-        if option != 'exit':
-            menu(option)
+        while True:
+            clear()
+            option = curses.wrapper(mainMenu)
+            if option != 'exit':
+                try:
+                    menu(option)
+                    input('\n(Press \'enter\' to go back)\n')
+                except:
+                    pass
+            else:
+                break
 
 if __name__ == "__main__":
     main()
