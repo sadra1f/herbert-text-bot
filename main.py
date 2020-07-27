@@ -57,18 +57,20 @@ def start(arg: list):
 def menu(option) -> bool:
     clear()
     print('herbert-text-bot:')
-    print('(Press \'ctrl + c\' to cancel the operation)\n')
     arg = [option]
     try:
         if option == 'about':
-            print('This is a simple spammer bot to annoy people (for now)\n')
+            print('\nThis is a simple spammer bot. (for now)\n')
+            print('Version: 0.1.0')
             print('GitHub: https://github.com/Sadra1f/herbert-text-bot')
             print('This program is under MIT Licence\n')
-        elif option == 'spammer':
-            arg.append(input('Text: '))
-            arg.append(input('Count (default: 1): '))
-            arg.append(input('Wait time (sec - default: 1): '))
-            start(arg)
+        else:
+            print('(Press \'ctrl + c\' to cancel the operation)\n')
+            if option == 'spammer':
+                arg.append(input('Text: '))
+                arg.append(input('Count (default: 1): '))
+                arg.append(input('Wait time (sec - default: 1): '))
+                start(arg)
     except:
         clear()
         print('herbert-text-bot:') 
@@ -119,7 +121,7 @@ def main():
     arg = arguments()
 
     try:
-        if arg[0] == 'about':  # main.py spammer 'text' 10
+        if arg[0] == 'about':  # main.py spammer 'text' 1 1
             menu(arg[0])
         else:
             start(arg)
