@@ -6,6 +6,8 @@ import curses
 
 from modules.spammer import spam
 
+title = 'herbert-text-bot:'
+
 def clear():
     if name == 'nt':
         _ = system('cls')
@@ -34,7 +36,7 @@ def operation(name: str, arg: list) -> bool:
 
 def start(arg: list):
     clear()
-    print('herbert-text-bot:')
+    print(title)
     print('(Press \'ctrl + c\' to cancel the operation)\n')
     
     try:
@@ -52,11 +54,11 @@ def start(arg: list):
     except:
         pass
     clear()
-    print('herbert-text-bot:\n\nFailed!')
+    print(title, '\n\nFailed!')
 
 def menu(option) -> bool:
     clear()
-    print('herbert-text-bot:')
+    print(title)
     arg = [option]
     try:
         if option == 'about':
@@ -73,9 +75,9 @@ def menu(option) -> bool:
                 start(arg)
     except:
         clear()
-        print('herbert-text-bot:') 
+        print(title) 
 
-def mainMenu(stdscr) -> str:
+def main_menu(stdscr) -> str:
 
     options = [
         'Spammer',
@@ -128,7 +130,7 @@ def main():
     except:
         while True:
             clear()
-            option = curses.wrapper(mainMenu)
+            option = curses.wrapper(main_menu)
             if option != 'exit':
                 try:
                     menu(option)
