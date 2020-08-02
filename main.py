@@ -32,7 +32,7 @@ def operation(name: str, arg: list) -> bool:
             except:
                 return spam(arg[0])
     else:
-        False
+        return False
 
 def start(arg: list):
     clear()
