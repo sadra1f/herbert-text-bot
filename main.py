@@ -88,7 +88,7 @@ def menu(option) -> bool:
     try:
         if option == 'about':
             print('\nThis is a simple spammer bot. (for now)\n')
-            print('Version: 0.1.0')
+            print('Version: 0.2.0')
             print('GitHub: https://github.com/Sadra1f/herbert-text-bot')
             print('This program is under MIT Licence\n')
         else:
