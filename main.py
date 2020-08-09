@@ -5,6 +5,7 @@ from time import sleep
 import curses
 
 from modules.spammer import spam, spam_file
+from modules.separate import separate_words
 
 title = 'herbert-text-bot:'
 
@@ -39,6 +40,11 @@ def operation(name: str, arg: list) -> bool:
                 return spam_file(arg[0], int(arg[1]))
             except:
                 return spam_file(arg[0])
+    elif name.lower() == 'separate words' or name.lower() == 'separatewords' or name.lower() == 'sp':
+        try:
+            return separate_words(arg[0], float(arg[1]))
+        except:
+            return separate_words(arg[0])
     else:
         return False
 
@@ -86,6 +92,10 @@ def menu(option) -> bool:
                 arg.append(input('Count (default: 1): '))
                 arg.append(input('Wait time (sec - default: 1): '))
                 start(arg)
+            elif option == 'separate words':
+                arg.append(input('Text: '))
+                arg.append(input('Wait time (sec - default: 1): '))
+                start(arg)
     except:
         clear()
         print(title) 
@@ -95,6 +105,7 @@ def main_menu(stdscr) -> str:
     options = [
         'Spammer',
         'File Spammer',
+        'Separate Words',
         'About',
         'Exit'
     ]
