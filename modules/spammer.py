@@ -2,6 +2,7 @@ from time import sleep
 
 import keyboard
 
+
 def read_file(path: str) -> str:
     try:
         if path[-4:] == '.txt':
@@ -11,15 +12,18 @@ def read_file(path: str) -> str:
         pass
     return None
 
+
 def spam(text: str, num: int = 1, time: int = 1) -> bool:
     try:
-        for _ in range(num):
-            sleep(time)
+        for i in range(num):
             keyboard.write(text)
             keyboard.press_and_release('enter')
+            if i != num - 1:
+                sleep(time)
         return True
     except:
         return False
+
 
 def spam_file(path: str, num: int = 1, time: int = 1) -> bool:
     text = read_file(path)
@@ -27,4 +31,3 @@ def spam_file(path: str, num: int = 1, time: int = 1) -> bool:
         return spam(text, num, time)
     else:
         return False
-        

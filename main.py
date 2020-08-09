@@ -9,11 +9,13 @@ from modules.separate import separate_words
 
 title = 'herbert-text-bot:'
 
+
 def clear():
     if name == 'nt':
         _ = system('cls')
     else:
         _ = system('clear')
+
 
 def arguments() -> list:
     try:
@@ -23,36 +25,38 @@ def arguments() -> list:
     except:
         return []
 
+
+def get_index(l: list, index: int = 0, t: str = 'str', default=None) -> str:
+    try:
+        if t.lower() == 'int':
+            return int(l[index])
+        elif t.lower() == 'float':
+            return float(l[index])
+        else:
+            return l[index]
+    except:
+        return default
+
+
 def operation(name: str, arg: list) -> bool:
     if name.lower() == 'spammer' or name.lower() == 's':
-        try:
-            return spam(arg[0], int(arg[1]), float(arg[2]))
-        except:
-            try:
-                return spam(arg[0], int(arg[1]))
-            except:
-                return spam(arg[0])
+        return spam(get_index(arg, 0), get_index(arg, 1, 'int', default=1), get_index(arg, 2, 'float', default=1))
+
     elif name.lower() == 'file spammer' or name.lower() == 'filespammer' or name.lower() == 'fs':
-        try:
-            return spam_file(arg[0], int(arg[1]), float(arg[2]))
-        except:
-            try:
-                return spam_file(arg[0], int(arg[1]))
-            except:
-                return spam_file(arg[0])
+        return spam_file(get_index(arg, 0), get_index(arg, 1, 'int', default=1), get_index(arg, 2, 'float', default=1))
+
     elif name.lower() == 'separate words' or name.lower() == 'separatewords' or name.lower() == 'sp':
-        try:
-            return separate_words(arg[0], float(arg[1]))
-        except:
-            return separate_words(arg[0])
+        return spam(get_index(arg, 0), get_index(arg, 1, 'float', default=1))
+
     else:
         return False
+
 
 def start(arg: list):
     clear()
     print(title)
     print('(Press \'ctrl + c\' to cancel the operation)\n')
-    
+
     try:
         if str(arg[1]).strip() != '':
             for c in range(5, 0, -1):
@@ -61,7 +65,7 @@ def start(arg: list):
             print('\r' + (60 * ' '), end='\r')
 
             print('Started...')
-                
+
             if operation(arg[0], arg[1::]):
                 print('Done!')
                 return None
@@ -69,6 +73,7 @@ def start(arg: list):
         pass
     clear()
     print(title, '\n\nFailed!')
+
 
 def menu(option) -> bool:
     clear()
@@ -98,7 +103,8 @@ def menu(option) -> bool:
                 start(arg)
     except:
         clear()
-        print(title) 
+        print(title)
+
 
 def main_menu(stdscr) -> str:
 
@@ -144,6 +150,7 @@ def main_menu(stdscr) -> str:
 
     return str(options[option]).lower()
 
+
 def main():
     arg = arguments()
 
@@ -164,6 +171,7 @@ def main():
                     pass
             else:
                 break
+
 
 if __name__ == "__main__":
     main()
