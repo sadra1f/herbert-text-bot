@@ -4,7 +4,7 @@ from time import sleep
 
 import curses
 
-from modules.spammer import spam
+from modules.spammer import spam, spam_file
 
 title = 'herbert-text-bot:'
 
@@ -31,6 +31,14 @@ def operation(name: str, arg: list) -> bool:
                 return spam(arg[0], int(arg[1]))
             except:
                 return spam(arg[0])
+    elif name.lower() == 'file spammer' or name.lower() == 'filespammer' or name.lower() == 'fs':
+        try:
+            return spam_file(arg[0], int(arg[1]), float(arg[2]))
+        except:
+            try:
+                return spam_file(arg[0], int(arg[1]))
+            except:
+                return spam_file(arg[0])
     else:
         return False
 
@@ -73,6 +81,11 @@ def menu(option) -> bool:
                 arg.append(input('Count (default: 1): '))
                 arg.append(input('Wait time (sec - default: 1): '))
                 start(arg)
+            elif option == 'file spammer':
+                arg.append(input('File path (*.txt): '))
+                arg.append(input('Count (default: 1): '))
+                arg.append(input('Wait time (sec - default: 1): '))
+                start(arg)
     except:
         clear()
         print(title) 
@@ -81,6 +94,7 @@ def main_menu(stdscr) -> str:
 
     options = [
         'Spammer',
+        'File Spammer',
         'About',
         'Exit'
     ]
