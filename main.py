@@ -149,26 +149,29 @@ def main_menu(stdscr) -> str:
     option = 0  # the current option that is marked
 
     while key != 10:  # Enter in ascii
-        stdscr.erase()
-        stdscr.addstr("herbert-text-bot:\n\n", curses.A_NORMAL)
+        try:
+            stdscr.erase()
+            stdscr.addstr("herbert-text-bot:\n\n", curses.A_NORMAL)
 
-        for index in range(len(options)):
-            if index == option:
-                attr = attributes['highlighted']
-            else:
-                attr = attributes['normal']
+            for index in range(len(options)):
+                if index == option:
+                    attr = attributes['highlighted']
+                else:
+                    attr = attributes['normal']
 
-            if index == len(options) - 2:
-                stdscr.addstr('\n')
+                if index == len(options) - 2:
+                    stdscr.addstr('\n')
 
-            stdscr.addstr('- ')
-            stdscr.addstr(options[index] + '\n', attr)
+                stdscr.addstr('- ')
+                stdscr.addstr(options[index] + '\n', attr)
 
-        key = stdscr.getch()
-        if key == curses.KEY_UP and option > 0:
-            option -= 1
-        elif key == curses.KEY_DOWN and option < len(options) - 1:
-            option += 1
+            key = stdscr.getch()
+            if key == curses.KEY_UP and option > 0:
+                option -= 1
+            elif key == curses.KEY_DOWN and option < len(options) - 1:
+                option += 1
+        except:
+            return 'error'
 
     return str(options_code[option]).lower()
 
@@ -185,7 +188,10 @@ def main():
         while True:
             clear()
             option = curses.wrapper(main_menu)
-            if option != 'exit':
+            if option == 'error':
+                print("ERROR: Can't draw the menu! (Try re-opening program in a bigger window)")
+                return None
+            elif option != 'exit':
                 try:
                     menu(option)
                     input('\n(Press \'enter\' to go back)\n')
