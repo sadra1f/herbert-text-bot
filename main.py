@@ -5,7 +5,7 @@ from time import sleep
 import curses
 
 from modules.spammer import spam, spam_file
-from modules.separate import separate_words
+from modules.separate import separate_lines_file, separate_words, separate_words_file
 
 title = 'herbert-text-bot:'
 
@@ -42,11 +42,17 @@ def operation(name: str, arg: list) -> bool:
     if name.lower() == 'spammer' or name.lower() == 's':
         return spam(get_index(arg, 0), get_index(arg, 1, 'int', default=1), get_index(arg, 2, 'float', default=1))
 
-    elif name.lower() == 'file spammer' or name.lower() == 'filespammer' or name.lower() == 'fs':
+    elif name.lower() == 'filespammer' or name.lower() == 'fs':
         return spam_file(get_index(arg, 0), get_index(arg, 1, 'int', default=1), get_index(arg, 2, 'float', default=1))
 
-    elif name.lower() == 'separate words' or name.lower() == 'separatewords' or name.lower() == 'sp':
-        return spam(get_index(arg, 0), get_index(arg, 1, 'float', default=1))
+    elif name.lower() == 'separatedwords' or name.lower() == 'sw':
+        return separate_words(get_index(arg, 0), get_index(arg, 1, 'float', default=1))
+
+    elif name.lower() == 'fileseparatedwords' or name.lower() == 'fsw':
+        return separate_words_file(get_index(arg, 0), get_index(arg, 1, 'float', default=1))
+
+    elif name.lower() == 'fileseparatedlines' or name.lower() == 'fsl':
+        return separate_lines_file(get_index(arg, 0), get_index(arg, 1, 'float', default=1))
 
     else:
         return False
@@ -87,18 +93,22 @@ def menu(option) -> bool:
             print('This program is under MIT Licence\n')
         else:
             print('(Press \'ctrl + c\' to cancel the operation)\n')
-            if option == 'spammer':
+            if option == 's':
                 arg.append(input('Text: '))
                 arg.append(input('Count (default: 1): '))
                 arg.append(input('Wait time (sec - default: 1): '))
                 start(arg)
-            elif option == 'file spammer':
+            elif option == 'fs':
                 arg.append(input('File path (*.txt): '))
                 arg.append(input('Count (default: 1): '))
                 arg.append(input('Wait time (sec - default: 1): '))
                 start(arg)
-            elif option == 'separate words':
+            elif option == 'sw':
                 arg.append(input('Text: '))
+                arg.append(input('Wait time (sec - default: 1): '))
+                start(arg)
+            elif option == 'fsw' or option == 'fsl':
+                arg.append(input('File path (*.txt): '))
                 arg.append(input('Wait time (sec - default: 1): '))
                 start(arg)
     except:
@@ -109,11 +119,23 @@ def menu(option) -> bool:
 def main_menu(stdscr) -> str:
 
     options = [
-        'Spammer',
-        'File Spammer',
-        'Separate Words',
+        'Spam',
+        'Spam from File',
+        'Separated Words',
+        'Separated Words from File',
+        'Separated Lines from File',
         'About',
         'Exit'
+    ]
+
+    options_code = [
+        's',
+        'fs',
+        'sw',
+        'fsw',
+        'fsl',
+        'about',
+        'exit'
     ]
 
     attributes = {}
@@ -148,7 +170,7 @@ def main_menu(stdscr) -> str:
         elif key == curses.KEY_DOWN and option < len(options) - 1:
             option += 1
 
-    return str(options[option]).lower()
+    return str(options_code[option]).lower()
 
 
 def main():
